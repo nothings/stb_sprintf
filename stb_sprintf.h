@@ -21,6 +21,7 @@
 //    Adam Allison
 //    Arvid Gerstmann
 //    Markus Kolb
+//    Patryk Pujanek
 //
 // LICENSE:
 //
@@ -490,7 +491,7 @@ STBSP__PUBLICDEF int STB_SPRINTF_DECORATE(vsprintfcb)(STBSP_SPRINTFCB *callback,
          case '0':
             fl |= STBSP__LEADINGZERO;
             ++f;
-            goto flags_done;
+            continue;
          default: goto flags_done;
          }
       }
