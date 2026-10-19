@@ -37,7 +37,7 @@ Hereby placed in public domain.
 
 This is a full sprintf replacement that supports everything that
 the C runtime sprintfs support, including float/double, 64-bit integers,
-hex floats, field parameters (%*.*d stuff), length reads backs, etc.
+hex floats, field parameters (%*.*d stuff), length readbacks, etc.
 
 Why would you need this if sprintf already exists?  Well, first off,
 it's *much* faster (see below). It's also much smaller than the CRT
@@ -52,7 +52,7 @@ and the source itself. If you just include it normally, you just get
 the header file function definitions. To get the code, you include
 it from a C or C++ file and define STB_SPRINTF_IMPLEMENTATION first.
 
-It only uses va_args macros from the C runtime to do it's work. It
+It only uses va_args macros from the C runtime to do its work. It
 does cast doubles to S64s and shifts and divides U64s, which does
 drag in CRT code on most platforms.
 
@@ -85,7 +85,7 @@ void stbsp_set_separators( char comma, char period )
 
 FLOATS/DOUBLES:
 ===============
-This code uses a internal float->ascii conversion method that uses
+This code uses an internal float->ascii conversion method that uses
 doubles with error correction (double-doubles, for ~105 bits of
 precision).  This conversion is round-trip perfect - that is, an atof
 of the values output here will give you the bit-exact double back.
@@ -102,7 +102,7 @@ and you'll save 4K of code space.
 ============
 This library also supports 64-bit integers and you can use MSVC style or
 GCC style indicators (%I64d or %lld).  It supports the C99 specifiers
-for size_t and ptr_diff_t (%jd %zd) as well.
+for size_t and ptrdiff_t (%zd %td) as well.
 
 EXTRAS:
 =======
@@ -324,7 +324,7 @@ static STBSP__ASAN stbsp__uint32 stbsp__strlen_limited(char const *s, stbsp__uin
 
    // scan over 4 bytes at a time to find terminating 0
    // this will intentionally scan up to 3 bytes past the end of buffers,
-   // but becase it works 4B aligned, it will never cross page boundaries
+   // but because it works 4B aligned, it will never cross page boundaries
    // (hence the STBSP__ASAN markup; the over-read here is intentional
    // and harmless)
    while (limit >= 4) {
@@ -1701,7 +1701,7 @@ static void stbsp__raise_to_power10(double *ohi, double *olo, double d, stbsp__i
 // given a float value, returns the significant bits in bits, and the position of the
 //   decimal point in decimal_pos.  +/-INF and NAN are specified by special values
 //   returned in the decimal_pos parameter.
-// frac_digits is absolute normally, but if you want from first significant digits (got %g and %e), or in 0x80000000
+// frac_digits is absolute normally, but if you want from first significant digits (for %g and %e), or in 0x80000000
 static stbsp__int32 stbsp__real_to_str(char const **start, stbsp__uint32 *len, char *out, stbsp__int32 *decimal_pos, double value, stbsp__uint32 frac_digits)
 {
    double d;
@@ -1811,7 +1811,7 @@ static stbsp__int32 stbsp__real_to_str(char const **start, stbsp__uint32 *len, c
    for (;;) {
       stbsp__uint32 n;
       char *o = out - 8;
-      // do the conversion in chunks of U32s (avoid most 64-bit divides, worth it, constant denomiators be damned)
+      // do the conversion in chunks of U32s (avoid most 64-bit divides, worth it, constant denominators be damned)
       if (bits >= 100000000) {
          n = (stbsp__uint32)(bits % 100000000);
          bits /= 100000000;
