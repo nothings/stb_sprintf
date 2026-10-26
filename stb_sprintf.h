@@ -1431,8 +1431,12 @@ STBSP__PUBLICDEF int STB_SPRINTF_DECORATE( vsnprintf )( char * buf, int count, c
 {
    stbsp__context c;
 
-   if ( (count == 0) && !buf )
+   if (count <= 0)
    {
+      // count == 0 (with or without a buffer) means "compute the length
+      // but write nothing": writing the terminator would touch buf[-1].
+      // Negative counts are treated the same rather than running the
+      // bounded path with a negative bound. See issue #4.
       c.length = 0;
 
       STB_SPRINTF_DECORATE( vsprintfcb )( stbsp__count_clamp_callback, &c, c.tmp, fmt, va );
