@@ -35,8 +35,8 @@ specific macro (this is documented per-library) to actually enable the function 
 For example, to use stb_sprintf, you should have exactly one C/C++ file that doesn't
 include stb_sprintf.h regularly, but instead does
 
-    #define STB_IMAGE_IMPLEMENTATION
-    #include "stb_image_resize2.h"
+    #define STB_SPRINTF_IMPLEMENTATION
+    #include "stb_sprintf.h"
 
 The right macro to define is pointed out right at the top of each of these libraries.
 
